@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-
+let lastCardSelect = null;
+let currentCardSelect = null;
 
 /*
  * Display the cards on the page
@@ -36,3 +37,58 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+function notMatch() {
+    currentCardSelect.classList.add("not-match");
+    lastCardSelect.classList.add("not-match");
+    let current = currentCardSelect;
+    let last = lastCardSelect;
+
+    setTimeout( () =>{
+        current.classList.remove("open");
+        current.classList.remove("show");
+        current.classList.remove("not-match");
+        last.classList.remove("not-match");
+    }, 1000, current, last);
+}
+
+function checkCard() {
+    if(lastCardSelect === currentCardSelect) {
+        return;
+    }
+
+    let currentElement = currentCardSelect.id.split('_')[0];
+    let lastElement = lastCardSelect.id.split('_')[0];
+    if (currentElement === lastElement) {
+        currentCardSelect.classList.add("match");
+        lastCardSelect.classList.add("match");
+    } else {
+        notMatch()
+    }
+
+    currentCardSelect = null;
+    lastCardSelect = null;
+}
+
+function eventHandler(event) {
+    console.log(event.target.id);
+    currentCardSelect =  document.getElementById(event.target.id);
+    currentCardSelect.classList.add("open");
+    currentCardSelect.classList.add("show");
+
+    if (lastCardSelect && lastCardSelect !== currentCardSelect) {
+        lastCardSelect.classList.remove("open");
+        lastCardSelect.classList.remove("show");
+        checkCard();
+
+    }
+    lastCardSelect = currentCardSelect;
+
+}
+
+function initialize(){
+    document.getElementById("deck").addEventListener('click', eventHandler);
+}
+window.onload = initialize;
+

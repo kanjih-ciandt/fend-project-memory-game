@@ -8,6 +8,7 @@ let isGameStarted = false;
 let listSelected= [];
 let startTime = new Date().getTime();
 let moveCount = 0;
+let modal = document.getElementById('myModal');
 
 /*
  * Display the cards on the page
@@ -21,7 +22,6 @@ function shuffle(deck) {
         deck.appendChild(deck.children[Math.random() * i | 0]);
     }
 }
-
 
 function startGame() {
     isGameStarted = false;
@@ -43,18 +43,6 @@ function startGame() {
         }
     });
 }
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
 
 function notMatch() {
     currentCardSelect.classList.add("not-match");
@@ -84,16 +72,17 @@ function checkCard() {
         lastCardSelect.classList.add("match");
         listSelected.push(currentCardSelect.id);
         listSelected.push(lastCardSelect.id);
-        if (listSelected.length >= 16) {
-            finishedGame();
-        }
     } else {
-        notMatch()
+        notMatch();
     }
 
     moveController();
     currentCardSelect = null;
     lastCardSelect = null;
+
+    if (listSelected.length >= 16) {
+        finishedGame();
+    }
 }
 
 function moveController(reset){
@@ -103,6 +92,10 @@ function moveController(reset){
         document.getElementById("star-3").classList.add("fa-star");
         document.getElementById("star-2").classList.remove("fa-star-o");
         document.getElementById("star-2").classList.add("fa-star");
+        document.getElementById("star-w3").classList.remove("fa-star-o");
+        document.getElementById("star-w3").classList.add("fa-star");
+        document.getElementById("star-w2").classList.remove("fa-star-o");
+        document.getElementById("star-w2").classList.add("fa-star");
     } else {
         moveCount++;
     }
@@ -140,9 +133,16 @@ function eventHandler(event) {
 
 function finishedGame() {
     isGameStarted = false;
-    setTimeout( () =>{
-        alert('Ganhou !!!! \nOn this time:' +  document.querySelectorAll('.clock')[0].innerText );
-    }, 1000);
+    modal.style.display = "block";
+    document.getElementById("win-moves").innerHTML = moveCount;
+    if (moveCount >= 25 && moveCount < 50) {
+        document.getElementById("star-w3").classList.remove("fa-star");
+        document.getElementById("star-w3").classList.add("fa-star-o");
+    } else if (moveCount >= 50) {
+        document.getElementById("star-w2").classList.remove("fa-star");
+        document.getElementById("star-w2").classList.add("fa-star-o");
+    }
+
 }
 
 function clock() {// We create a new Date object and assign it to a variable called "time".
@@ -156,6 +156,9 @@ function clock() {// We create a new Date object and assign it to a variable cal
         document.querySelectorAll('.second')[0].innerHTML = ("0" + seconds).slice(-2);
         document.querySelectorAll('.minute')[0].innerHTML = ("0" + minutes).slice(-2);
         document.querySelectorAll('.hour')[0].innerHTML = ("0" + hours).slice(-2);
+        document.querySelectorAll('.second')[1].innerHTML = ("0" + seconds).slice(-2);
+        document.querySelectorAll('.minute')[1].innerHTML = ("0" + minutes).slice(-2);
+        document.querySelectorAll('.hour')[1].innerHTML = ("0" + hours).slice(-2);
     } else {
         startTime = new Date().getTime();
     }
@@ -163,7 +166,18 @@ function clock() {// We create a new Date object and assign it to a variable cal
 
 function initialize(){
     document.getElementById("deck").addEventListener('click', eventHandler);
+
+    let span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    };
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
     startGame();
 }
 window.onload = initialize;
-setInterval(clock, 1000);
+setInterval(clock, 500);

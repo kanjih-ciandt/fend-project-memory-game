@@ -17,15 +17,22 @@
 
         <section class="score-panel">
         	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
+        		<li><i id= "star-1" class="fa fa-star"></i></li>
+        		<li><i id= "star-2" class="fa fa-star"></i></li>
+        		<li><i id= "star-3" class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">3</span> Moves
+        	<span id= "moves" class="moves">0</span> Moves
+            <span class="clock">
+                <span class="hour">00</span>:
+                <span class="minute">00</span>:
+                <span class="second">00</span>
+            </span>
+
+
 
             <div class="restart">
-        		<i class="fa fa-repeat"></i>
+        		<i class="fa fa-repeat" onclick="finishedGame()"></i>
         	</div>
         </section>
 
@@ -36,7 +43,7 @@
             <li class="card" id="paper-plane-o_1">
                 <i class="fa fa-paper-plane-o"></i>
             </li>
-            <li class="card match" id="anchor_1">
+            <li class="card" id="anchor_1">
                 <i class="fa fa-anchor"></i>
             </li>
             <li class="card" id="bolt_1">
@@ -45,7 +52,7 @@
             <li class="card" id="cube_1">
                 <i class="fa fa-cube"></i>
             </li>
-            <li class="card match" id="anchor_2">
+            <li class="card" id="anchor_2">
                 <i class="fa fa-anchor"></i>
             </li>
             <li class="card" id="leaf_1">
@@ -54,7 +61,7 @@
             <li class="card" id="bicycle_1">
                 <i class="fa fa-bicycle"></i>
             </li>
-            <li class="card not-match" id="diamond_2">
+            <li class="card" id="diamond_2">
                 <i class="fa fa-diamond"></i>
             </li>
             <li class="card" id="bomb_1">
@@ -66,7 +73,7 @@
             <li class="card" id="bomb_2">
                 <i class="fa fa-bomb"></i>
             </li>
-            <li class="card open show" id="bolt_2">
+            <li class="card" id="bolt_2">
                 <i class="fa fa-bolt"></i>
             </li>
             <li class="card" id="bicycle_2">

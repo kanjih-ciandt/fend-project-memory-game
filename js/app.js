@@ -47,6 +47,8 @@ function startGame() {
 function notMatch() {
     currentCardSelect.classList.add("not-match");
     lastCardSelect.classList.add("not-match");
+    lastCardSelect.classList.add("class-shake");
+    currentCardSelect.classList.add("class-shake");
     let current = currentCardSelect;
     let last = lastCardSelect;
     isActiveActionLister= false;
@@ -56,6 +58,8 @@ function notMatch() {
         current.classList.remove("show");
         current.classList.remove("not-match");
         last.classList.remove("not-match");
+        current.classList.remove("class-shake");
+        last.classList.remove("class-shake");
         isActiveActionLister = true;
     }, 1000, current, last, isActiveActionLister);
 }
@@ -70,6 +74,8 @@ function checkCard() {
     if (currentElement === lastElement) {
         currentCardSelect.classList.add("match");
         lastCardSelect.classList.add("match");
+        currentCardSelect.classList.add("class-flash");
+        lastCardSelect.classList.add("class-flash");
         listSelected.push(currentCardSelect.id);
         listSelected.push(lastCardSelect.id);
     } else {
